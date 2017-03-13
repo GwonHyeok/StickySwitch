@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="LiquidSwitch">
+        <attr name="leftIcon" format="reference|integer" />
+        <attr name="leftText" format="reference|string" />
+        <attr name="rightIcon" format="reference|integer" />
+        <attr name="rightText" format="reference|string" />
+        <attr name="iconSize" format="reference|dimension" />
+        <attr name="iconPadding" format="reference|dimension" />
+        <attr name="textSize" format="reference|dimension" />
+        <attr name="selectedTextSize" format="reference|dimension" />
+    </declare-styleable>
+</resources>
