@@ -5,22 +5,22 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackground"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@color/colorBackground"
     tools:context="io.ghyeok.stickyswitchdemo.MainActivity">
 
     <io.ghyeok.stickyswitch.widget.StickySwitch
         android:layout_width="160dp"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         android:layout_centerInParent="true"
         app:iconPadding="18dp"
         app:iconSize="22dp"
-        app:leftIcon="@mipmap/ic_launcher"
+        app:leftIcon="@drawable/ic_male"
         app:leftText="Male"
-        app:rightIcon="@mipmap/ic_launcher"
+        app:rightIcon="@drawable/ic_female"
         app:rightText="Female"
         app:selectedTextSize="14sp"
         app:textSize="12sp" />
