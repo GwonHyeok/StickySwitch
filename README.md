@@ -27,7 +27,7 @@ Add it in your root build.gradle at the end of repositories
 Add the dependency
 ```Groovy
     dependencies {
-        compile 'com.github.GwonHyeok:StickySwitch:0.0.1'
+        compile 'com.github.GwonHyeok:StickySwitch:0.0.2'
 	}
 ```
 
