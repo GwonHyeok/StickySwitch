@@ -14,8 +14,8 @@
 
     <io.ghyeok.stickyswitch.widget.StickySwitch
         android:id="@+id/sticky_switch"
-        android:layout_width="160dp"
-        android:layout_height="100dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         app:iconPadding="18dp"
         app:iconSize="22dp"

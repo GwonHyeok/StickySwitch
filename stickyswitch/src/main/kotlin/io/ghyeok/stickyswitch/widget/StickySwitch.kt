@@ -246,8 +246,7 @@ class StickySwitch : View {
         rightTextPaint.textSize = rightTextSize
 
         // 텍스트 크기 측정
-        leftTextPaint.getTextBounds(leftText, 0, leftText.length, leftTextRect)
-        rightTextPaint.getTextBounds(rightText, 0, rightText.length, rightTextRect)
+        measureText()
 
         // 왼쪽 텍스트 좌표
         val leftTextX = (circleRadius * 2 - leftTextRect.width()) * 0.5
@@ -285,26 +284,40 @@ class StickySwitch : View {
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+
+        measureText()
+
+        val diameter = (iconPadding + iconSize / 2) * 2
+        val textWidth = leftTextRect.width() + rightTextRect.width()
+
         val heightMode = MeasureSpec.getMode(heightMeasureSpec)
         var heightSize = 0
 
-        if (heightMode == MeasureSpec.UNSPECIFIED) {
-            heightSize = heightMeasureSpec
-        } else if (heightMode == MeasureSpec.AT_MOST) {
-            heightSize = (iconPadding + iconSize / 2) * 2 + 100
-        } else if (heightMode == MeasureSpec.EXACTLY) {
-            heightSize = MeasureSpec.getSize(heightMeasureSpec)
+        when (heightMode) {
+            MeasureSpec.UNSPECIFIED -> heightSize = heightMeasureSpec
+            MeasureSpec.AT_MOST -> heightSize = diameter + (selectedTextSize * 2)
+            MeasureSpec.EXACTLY -> heightSize = MeasureSpec.getSize(heightMeasureSpec)
         }
 
+        val widthMode = MeasureSpec.getMode(widthMeasureSpec)
+        var widthSize = 0
 
-        setMeasuredDimension(
-                getDefaultSize(suggestedMinimumWidth, widthMeasureSpec),
-                heightSize
-        )
+        when (widthMode) {
+            MeasureSpec.UNSPECIFIED -> widthSize = widthMeasureSpec
+            MeasureSpec.AT_MOST -> widthSize = diameter * 2 + textWidth
+            MeasureSpec.EXACTLY -> widthSize = MeasureSpec.getSize(widthMeasureSpec)
+        }
+
+        setMeasuredDimension(widthSize, heightSize)
     }
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         super.onLayout(changed, left, top, right, bottom)
+    }
+
+    private fun measureText() {
+        leftTextPaint.getTextBounds(leftText, 0, leftText.length, leftTextRect)
+        rightTextPaint.getTextBounds(rightText, 0, rightText.length, rightTextRect)
     }
 
     private fun animateCheckState(newCheckedState: Boolean) {
