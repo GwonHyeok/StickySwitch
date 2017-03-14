@@ -1,3 +1,26 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2017 GwonHyeok
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 package io.ghyeok.stickyswitch.widget
 
 import android.animation.Animator
@@ -19,38 +42,45 @@ import io.ghyeok.stickyswitch.R
 
 /**
  * Created by ghyeok on 2017. 3. 13..
+ *
+ * This class implements a beautiful switch widget for android
+ *
+ * @author GwonHyeok
  */
 class StickySwitch : View {
 
     private val TAG = "LIQUID_SWITCH"
 
-    // 아이콘 이미지
+    // left, right icon drawable
     private var leftIconDrawable: Drawable? = null
     private var rightIconDrawable: Drawable? = null
 
-    // 아이콘 사이즈, 패딩
+    // icon variables
     private var iconSize = 100
     private var iconPadding = 70
 
-    // 아이콘 텍스트
+    // text variables
     private var leftText = ""
     private var rightText = ""
 
+    // colors
     @ColorInt private var sliderBackgroundColor = 0XFF181821.toInt()
     @ColorInt private var switchColor = 0xFF2371FA.toInt()
 
+    // rounded rect
     private val sliderBackgroundPaint = Paint()
     private val sliderBackgroundRect = RectF()
 
+    // circular switch
     private val switchBackgroundPaint = Paint()
 
-    // 왼쪽, 오른쪽 글씨 페인트, 크기
+    // left, right text paint and size
     private val leftTextPaint = Paint()
     private val leftTextRect = Rect()
     private val rightTextPaint = Paint()
     private val rightTextRect = Rect()
 
-    // 왼쪽 글씨 텍스트 크기
+    // left, right text size
     private var leftTextSize = 50f
         set(value) {
             field = value
@@ -62,7 +92,7 @@ class StickySwitch : View {
             invalidate()
         }
 
-    // 텍스트 투명도
+    // text color transparency
     private var leftTextAlpha = 255
         set(value) {
             field = value
@@ -74,42 +104,46 @@ class StickySwitch : View {
             invalidate()
         }
 
-    // 일반 텍스트 크기
+    // text size
     private var textSize = 50
         set(value) {
             field = value
             invalidate()
         }
 
-    // 선택된 텍스트 크기
+    // text size when selected status
     private var selectedTextSize = 50
         set(value) {
             field = value
             invalidate()
         }
 
-    // 스위치 상태
+    // switch Status
+    // false : left status
+    // true  : right status
     private var isSwitchOn = false
         set(value) {
             field = value
             invalidate()
         }
 
-    // 스위치 상태 변경시 애니메이션 진행도
+    // percent of switch animation
+    // animatePercent will be 0.0 ~ 1.0
     private var animatePercent: Double = 0.0
         set(value) {
             field = value
             invalidate()
         }
 
-    // 바운스 animate rate
+    // circular switch bounce rate
+    // animateBounceRate will be 1.1 ~ 0.0
     private var animateBounceRate: Double = 1.0
         set(value) {
             field = value
             invalidate()
         }
 
-    // 리스너
+    // listener
     var onSelectedChangeListener: OnSelectedChangeListener? = null
 
     constructor(context: Context) : this(context, null)
@@ -128,76 +162,90 @@ class StickySwitch : View {
     private fun init(attrs: AttributeSet?, defStyleAttr: Int = 0, defStyleRes: Int = 0) {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.StickySwitch, defStyleAttr, defStyleRes)
 
-        // 왼쪽 스위치 아이콘
+        // left switch icon
         leftIconDrawable = typedArray.getDrawable(R.styleable.StickySwitch_leftIcon)
         leftText = typedArray.getString(R.styleable.StickySwitch_leftText) ?: leftText
 
-        // 오른쪽 스위치 아이콘
+        // right switch icon
         rightIconDrawable = typedArray.getDrawable(R.styleable.StickySwitch_rightIcon)
         rightText = typedArray.getString(R.styleable.StickySwitch_rightText) ?: rightText
 
-        // 아이콘 크기
+        // icon size
         iconSize = typedArray.getDimensionPixelSize(R.styleable.StickySwitch_iconSize, iconSize)
         iconPadding = typedArray.getDimensionPixelSize(R.styleable.StickySwitch_iconPadding, iconPadding)
 
-        // 저장되어 있는 텍스트 사이즈
+        // saved text size
         textSize = typedArray.getDimensionPixelSize(R.styleable.StickySwitch_textSize, textSize)
         selectedTextSize = typedArray.getDimensionPixelSize(R.styleable.StickySwitch_selectedTextSize, selectedTextSize)
 
-        // 현재 텍스트 사이즈
+        // current text size
         leftTextSize = selectedTextSize.toFloat()
         rightTextSize = textSize.toFloat()
 
         typedArray.recycle()
     }
 
+    /**
+     * Draw Sticky Switch View
+     *
+     * Animation
+     *
+     * 0% ~ 50%
+     * radius : circle radius -> circle radius / 2
+     * x      : x -> x + widthSpace
+     * y      : y
+     *
+     * 50% ~ 100%
+     * radius : circle radius / 2 -> circle radius
+     * x      : x + widthSpace -> x + widthSpace
+     * y      : y
+     *
+     * @param canvas the canvas on which the background will be drawn
+     */
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
 
-        // 아이콘 상하좌우 margin
+        // icon margin
         val iconMarginLeft = iconPadding
         val iconMarginBottom = iconPadding
         val iconMarginRight = iconPadding
         val iconMarginTop = iconPadding
 
-        // 아이콘 가로 크기
+        // icon width, height
         val iconWidth = iconSize
         val iconHeight = iconSize
 
-        // 원 Radius
+        // circle Radius
         val sliderRadius = iconMarginTop + iconHeight / 2f
         val circleRadius = iconMarginTop + iconHeight / 2f
 
-        // 아이콘뒤를 감싸는 타원 배경
+        // draw circular rect
         sliderBackgroundPaint.color = sliderBackgroundColor
         sliderBackgroundRect.set(0f, 0f, measuredWidth.toFloat(), (iconMarginTop + iconHeight + iconMarginBottom).toFloat())
         canvas?.drawRoundRect(sliderBackgroundRect, sliderRadius, sliderRadius, sliderBackgroundPaint)
 
-        // 현재 상태를 나타내는 버튼
+        // switch background
         switchBackgroundPaint.color = switchColor
 
-        // 애니메이션 상상
-        // 0% ~ 50% 까지는 반지름의 절반이 될때까지 원이 반대편 원에 도착한다
-        // 50% ~ 100% 까지는 원이 점점커진다
         canvas?.save()
 
-        // 애니메이션 절반 이전
+        // if animation is before half
         val isBeforeHalf = animatePercent in 0.0..0.5
 
-        // 애니메이션에서 원, 사각형 들이 움직여야하는 길이
+        // width at which objects move in animation
         val widthSpace = measuredWidth - circleRadius * 2
 
-        // 원본 원 x, y, radius
+        // original circular switch x, y, radius
         val ocX = (circleRadius + widthSpace * Math.min(1.0, animatePercent * 2))
         val ocY = circleRadius
         val ocRadius = circleRadius * (if (isBeforeHalf) 1.0 - animatePercent else animatePercent)
 
-        // 복제 원 x, y, radius
+        // copied circular switch x, y, radius
         val ccX = (circleRadius + widthSpace * (if (isBeforeHalf) 0.0 else Math.abs(0.5 - animatePercent) * 2))
         val ccY = circleRadius
         val ccRadius = circleRadius * (if (isBeforeHalf) 1.0 - animatePercent else animatePercent)
 
-        // 원과 원 사이에 줄
+        // circular rectangle
         val rectL = ccX
         val rectT = circleRadius - circleRadius / 2
         val rectR = ocX
@@ -209,7 +257,7 @@ class StickySwitch : View {
 
         canvas?.restore()
 
-        // 왼쪽 아이콘
+        // draw left icon
         if (leftIconDrawable != null) {
             canvas?.save()
             leftIconDrawable?.bounds?.set(iconMarginLeft,
@@ -222,7 +270,7 @@ class StickySwitch : View {
             canvas?.restore()
         }
 
-        // 오른쪽 아이콘
+        // draw right icon
         if (rightIconDrawable != null) {
             canvas?.save()
             rightIconDrawable?.bounds?.set(
@@ -236,36 +284,36 @@ class StickySwitch : View {
             canvas?.restore()
         }
 
-        // 스위치 하단 남는 부분
+        // bottom space
         val bottomSpaceHeight = measuredHeight - (circleRadius * 2)
 
-        // 텍스트 페인트 색상
+        // set text paint
         leftTextPaint.color = Color.WHITE
         leftTextPaint.alpha = leftTextAlpha
         rightTextPaint.color = Color.WHITE
         rightTextPaint.alpha = rightTextAlpha
 
-        // 텍스트 페인트 크기
+        // set text size
         leftTextPaint.textSize = leftTextSize
         rightTextPaint.textSize = rightTextSize
 
-        // 텍스트 크기 측정
+        // measure text size
         measureText()
 
-        // 왼쪽 텍스트 좌표
+        // left text position
         val leftTextX = (circleRadius * 2 - leftTextRect.width()) * 0.5
         val leftTextY = (circleRadius * 2) + (bottomSpaceHeight * 0.5) + (leftTextRect.height() * 0.25)
 
-        // 왼쪽 아이콘 하단 글씨
+        // draw left text
         canvas?.save()
         canvas?.drawText(leftText, leftTextX.toFloat(), leftTextY.toFloat(), leftTextPaint)
         canvas?.restore()
 
-        // 오른쪽 텍스트 좌표
+        // right text position
         val rightTextX = ((circleRadius * 2 - rightTextRect.width()) * 0.5) + (measuredWidth - (circleRadius * 2))
         val rightTextY = (circleRadius * 2) + (bottomSpaceHeight * 0.5) + (rightTextRect.height() * 0.25)
 
-        // 오른쪽 아이콘 하단 글씨
+        // draw right text
         canvas?.save()
         canvas?.drawText(rightText, rightTextX.toFloat(), rightTextY.toFloat(), rightTextPaint)
         canvas?.restore()
@@ -283,12 +331,9 @@ class StickySwitch : View {
         return super.onTouchEvent(event)
     }
 
-    override fun performClick(): Boolean {
-        return super.performClick()
-    }
-
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
 
+        // measure text size
         measureText()
 
         val diameter = (iconPadding + iconSize / 2) * 2
@@ -337,9 +382,6 @@ class StickySwitch : View {
         animatorSet.start()
     }
 
-    /**
-     * 왼쪽 텍스트 알파 애니메이터
-     */
     private fun leftTextAlphaAnimator(newCheckedState: Boolean): Animator {
         val toAlpha = if (newCheckedState) 163 else 255
         val animator = ValueAnimator.ofInt(leftTextAlpha, toAlpha)
@@ -360,9 +402,6 @@ class StickySwitch : View {
         return animator
     }
 
-    /**
-     * 왼쪽 텍스트 크기 변경 에니메이터
-     */
     private fun leftTextSizeAnimator(newCheckedState: Boolean): Animator {
         val toTextSize = if (newCheckedState) textSize else selectedTextSize
         val textSizeAnimator = ValueAnimator.ofFloat(leftTextSize, toTextSize.toFloat())
@@ -373,9 +412,6 @@ class StickySwitch : View {
         return textSizeAnimator
     }
 
-    /**
-     * 오른쪽 텍스트 크기 변경 에니메이터
-     */
     private fun rightTextSizeAnimator(newCheckedState: Boolean): Animator {
         val toTextSize = if (newCheckedState) selectedTextSize else textSize
         val textSizeAnimator = ValueAnimator.ofFloat(rightTextSize, toTextSize.toFloat())
@@ -386,9 +422,6 @@ class StickySwitch : View {
         return textSizeAnimator
     }
 
-    /**
-     * 상태 변경시 물방울 효과 에니메이터
-     */
     private fun getLiquidAnimator(newCheckedState: Boolean): Animator {
         val liquidAnimator = ValueAnimator.ofFloat(animatePercent.toFloat(), if (newCheckedState) 1f else 0f)
         liquidAnimator.duration = 600
@@ -397,9 +430,6 @@ class StickySwitch : View {
         return liquidAnimator
     }
 
-    /**
-     * 원이 바운스 하는 효과 에니메이터
-     */
     private fun getBounceAnimator(): Animator {
         val animator = ValueAnimator.ofFloat(1f, 0.9f, 1f)
         animator.duration = 250
