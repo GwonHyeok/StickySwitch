@@ -130,11 +130,11 @@ class StickySwitch : View {
 
         // 왼쪽 스위치 아이콘
         leftIconDrawable = typedArray.getDrawable(R.styleable.StickySwitch_leftIcon)
-        leftText = typedArray.getString(R.styleable.StickySwitch_leftText)
+        leftText = typedArray.getString(R.styleable.StickySwitch_leftText) ?: leftText
 
         // 오른쪽 스위치 아이콘
         rightIconDrawable = typedArray.getDrawable(R.styleable.StickySwitch_rightIcon)
-        rightText = typedArray.getString(R.styleable.StickySwitch_rightText)
+        rightText = typedArray.getString(R.styleable.StickySwitch_rightText) ?: rightText
 
         // 아이콘 크기
         iconSize = typedArray.getDimensionPixelSize(R.styleable.StickySwitch_iconSize, iconSize)
