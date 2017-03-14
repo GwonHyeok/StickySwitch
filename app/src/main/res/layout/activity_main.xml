@@ -13,6 +13,7 @@
     tools:context="io.ghyeok.stickyswitchdemo.MainActivity">
 
     <io.ghyeok.stickyswitch.widget.StickySwitch
+        android:id="@+id/sticky_switch"
         android:layout_width="160dp"
         android:layout_height="100dp"
         android:layout_centerInParent="true"
