@@ -25,8 +25,8 @@ class StickySwitch : View {
     private val TAG = "LIQUID_SWITCH"
 
     // 아이콘 이미지
-    lateinit private var leftIconDrawable: Drawable
-    lateinit private var rightIconDrawable: Drawable
+    private var leftIconDrawable: Drawable? = null
+    private var rightIconDrawable: Drawable? = null
 
     // 아이콘 사이즈, 패딩
     private var iconSize = 100
@@ -210,27 +210,31 @@ class StickySwitch : View {
         canvas?.restore()
 
         // 왼쪽 아이콘
-        canvas?.save()
-        leftIconDrawable.bounds.set(iconMarginLeft,
-                iconMarginTop,
-                iconMarginLeft + iconWidth,
-                iconMarginTop + iconHeight
-        )
-        leftIconDrawable.alpha = if (isSwitchOn) 153 else 255
-        leftIconDrawable.draw(canvas)
-        canvas?.restore()
+        if (leftIconDrawable != null) {
+            canvas?.save()
+            leftIconDrawable?.bounds?.set(iconMarginLeft,
+                    iconMarginTop,
+                    iconMarginLeft + iconWidth,
+                    iconMarginTop + iconHeight
+            )
+            leftIconDrawable?.alpha = if (isSwitchOn) 153 else 255
+            leftIconDrawable?.draw(canvas)
+            canvas?.restore()
+        }
 
         // 오른쪽 아이콘
-        canvas?.save()
-        rightIconDrawable.bounds.set(
-                measuredWidth - iconWidth - iconMarginRight,
-                iconMarginTop,
-                measuredWidth - iconMarginRight,
-                iconMarginTop + iconHeight
-        )
-        rightIconDrawable.alpha = if (!isSwitchOn) 153 else 255
-        rightIconDrawable.draw(canvas)
-        canvas?.restore()
+        if (rightIconDrawable != null) {
+            canvas?.save()
+            rightIconDrawable?.bounds?.set(
+                    measuredWidth - iconWidth - iconMarginRight,
+                    iconMarginTop,
+                    measuredWidth - iconMarginRight,
+                    iconMarginTop + iconHeight
+            )
+            rightIconDrawable?.alpha = if (!isSwitchOn) 153 else 255
+            rightIconDrawable?.draw(canvas)
+            canvas?.restore()
+        }
 
         // 스위치 하단 남는 부분
         val bottomSpaceHeight = measuredHeight - (circleRadius * 2)
