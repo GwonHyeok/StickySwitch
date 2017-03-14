@@ -1,5 +1,8 @@
 # StickySwitch
 
+[![License](http://img.shields.io/badge/license-MIT-green.svg?style=flat)]()
+[![](https://jitpack.io/v/GwonHyeok/StickySwitch.svg)](https://jitpack.io/#GwonHyeok/StickySwitch)
+
 StickySwitch library for android
 
 this library is beautiful switch widget with sticky animation
@@ -8,6 +11,25 @@ this library is beautiful switch widget with sticky animation
 
 ## Requirements
 - Android SDK 15+
+
+##Usage
+
+Add it in your root build.gradle at the end of repositories
+```Groovy
+	allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+```
+
+Add the dependency
+```Groovy
+    dependencies {
+        compile 'com.github.GwonHyeok:StickySwitch:0.0.1'
+	}
+```
 
 ## How to use this library
 Add `StickySwitch` to your xml layout
