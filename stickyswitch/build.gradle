@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion 25
@@ -9,7 +10,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 25
         versionCode 1
-        versionName "1.0"
+        versionName "0.0.1"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -19,6 +20,9 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
     }
 }
 
@@ -31,6 +35,18 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 }
+
 repositories {
     mavenCentral()
+}
+
+publish {
+    userOrg = 'ghyeok'
+    groupId = 'io.ghyeok.lib'
+    artifactId = 'sticky-switch'
+    publishVersion = '0.0.1'
+    desc = 'Sticky Switch'
+    website = 'https://github.com/GwonHyeok/StickySwitch'
+    issueTracker = 'https://github.com/GwonHyeok/StickySwitch/issues'
+    repository = 'https://github.com/GwonHyeok/StickySwitch.git'
 }

@@ -3,9 +3,11 @@ package io.ghyeok.stickyswitch.widget
 import android.animation.Animator
 import android.animation.AnimatorSet
 import android.animation.ValueAnimator
+import android.annotation.TargetApi
 import android.content.Context
 import android.graphics.*
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.support.annotation.ColorInt
 import android.util.AttributeSet
 import android.view.MotionEvent
@@ -118,28 +120,29 @@ class StickySwitch : View {
         init(attrs, defStyleAttr)
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {
         init(attrs, defStyleAttr, defStyleRes)
     }
 
     private fun init(attrs: AttributeSet?, defStyleAttr: Int = 0, defStyleRes: Int = 0) {
-        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.LiquidSwitch, defStyleAttr, defStyleRes)
+        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.StickySwitch, defStyleAttr, defStyleRes)
 
         // 왼쪽 스위치 아이콘
-        leftIconDrawable = typedArray.getDrawable(R.styleable.LiquidSwitch_leftIcon)
-        leftText = typedArray.getString(R.styleable.LiquidSwitch_leftText)
+        leftIconDrawable = typedArray.getDrawable(R.styleable.StickySwitch_leftIcon)
+        leftText = typedArray.getString(R.styleable.StickySwitch_leftText)
 
         // 오른쪽 스위치 아이콘
-        rightIconDrawable = typedArray.getDrawable(R.styleable.LiquidSwitch_rightIcon)
-        rightText = typedArray.getString(R.styleable.LiquidSwitch_rightText)
+        rightIconDrawable = typedArray.getDrawable(R.styleable.StickySwitch_rightIcon)
+        rightText = typedArray.getString(R.styleable.StickySwitch_rightText)
 
         // 아이콘 크기
-        iconSize = typedArray.getDimensionPixelSize(R.styleable.LiquidSwitch_iconSize, iconSize)
-        iconPadding = typedArray.getDimensionPixelSize(R.styleable.LiquidSwitch_iconPadding, iconPadding)
+        iconSize = typedArray.getDimensionPixelSize(R.styleable.StickySwitch_iconSize, iconSize)
+        iconPadding = typedArray.getDimensionPixelSize(R.styleable.StickySwitch_iconPadding, iconPadding)
 
         // 저장되어 있는 텍스트 사이즈
-        textSize = typedArray.getDimensionPixelSize(R.styleable.LiquidSwitch_textSize, textSize)
-        selectedTextSize = typedArray.getDimensionPixelSize(R.styleable.LiquidSwitch_selectedTextSize, selectedTextSize)
+        textSize = typedArray.getDimensionPixelSize(R.styleable.StickySwitch_textSize, textSize)
+        selectedTextSize = typedArray.getDimensionPixelSize(R.styleable.StickySwitch_selectedTextSize, selectedTextSize)
 
         // 현재 텍스트 사이즈
         leftTextSize = selectedTextSize.toFloat()
@@ -275,6 +278,10 @@ class StickySwitch : View {
         onSelectedChangeListener?.onSelectedChange(if (isSwitchOn) Direction.RIGHT else Direction.LEFT)
 
         return super.onTouchEvent(event)
+    }
+
+    override fun performClick(): Boolean {
+        return super.performClick()
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
