@@ -1,6 +1,8 @@
 # StickySwitch
 
 [![License](http://img.shields.io/badge/license-MIT-green.svg?style=flat)]()
+[![API](https://img.shields.io/badge/API-15%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=15)
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-StickySwitch-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/5433)
 [![](https://jitpack.io/v/GwonHyeok/StickySwitch.svg)](https://jitpack.io/#GwonHyeok/StickySwitch)
 
 StickySwitch library for android
@@ -12,23 +14,23 @@ this library is beautiful switch widget with sticky animation
 ## Requirements
 - Android SDK 15+
 
-##Usage
+## Usage
 
 Add it in your root build.gradle at the end of repositories
 ```Groovy
-	allprojects {
-		repositories {
-			...
-			maven { url 'https://jitpack.io' }
-		}
-	}
+allprojects {
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+    }
+}
 ```
 
 Add the dependency
 ```Groovy
-    dependencies {
-        compile 'com.github.GwonHyeok:StickySwitch:0.0.2'
-	}
+dependencies {
+    compile 'com.github.GwonHyeok:StickySwitch:0.0.2'
+}
 ```
 
 ## How to use this library
@@ -40,9 +42,9 @@ Add `StickySwitch` to your xml layout
         android:layout_centerInParent="true"
         app:iconPadding="18dp"
         app:iconSize="22dp"
-        app:leftIcon="@mipmap/ic_male"
+        app:leftIcon="@drawable/ic_male"
         app:leftText="Male"
-        app:rightIcon="@mipmap/ic_female"
+        app:rightIcon="@drawable/ic_female"
         app:rightText="Female"
         app:selectedTextSize="14sp"
         app:textSize="12sp" />
