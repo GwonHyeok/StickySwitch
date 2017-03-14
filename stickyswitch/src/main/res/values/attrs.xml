@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="LiquidSwitch">
+    <declare-styleable name="StickySwitch">
         <attr name="leftIcon" format="reference|integer" />
         <attr name="leftText" format="reference|string" />
         <attr name="rightIcon" format="reference|integer" />
