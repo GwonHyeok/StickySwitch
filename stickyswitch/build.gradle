@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'com.novoda.bintray-release'
+apply plugin: 'com.github.dcendents.android-maven'
 
 android {
     compileSdkVersion 25
@@ -50,3 +51,5 @@ publish {
     issueTracker = 'https://github.com/GwonHyeok/StickySwitch/issues'
     repository = 'https://github.com/GwonHyeok/StickySwitch.git'
 }
+
+group = 'com.github.GwonHyeok'
