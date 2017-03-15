@@ -51,7 +51,7 @@ Add `StickySwitch` to your xml layout
 ```
 
 ## Available attributes
-|       Name       |   Value   | Description |
+|       Name       |    Type   | Description |
 |:----------------:|:---------:|:-----------:|
 |    iconPadding   | dimension |      -      |
 |     iconSize     | dimension |      -      |
@@ -73,14 +73,23 @@ also switch is moved to the left, that variable is `StickySwitch.Direction.LEFT`
 
 Java Code Example
 ```java
-    // Set Selected Change Listener
-    StickySwitch stickySwitch = (StickySwitch) findViewById(R.id.sticky_switch);
-    stickySwitch.setOnSelectedChangeListener(new StickySwitch.OnSelectedChangeListener() {
-            @Override
-            public void onSelectedChange(@NotNull StickySwitch.Direction direction) {
-                Log.d(TAG, "Now Selected : " + direction.name());
-            }
-        });
+// Set Selected Change Listener
+StickySwitch stickySwitch = (StickySwitch) findViewById(R.id.sticky_switch);
+stickySwitch.setOnSelectedChangeListener(new StickySwitch.OnSelectedChangeListener() {
+    @Override
+    public void onSelectedChange(@NotNull StickySwitch.Direction direction) {
+        Log.d(TAG, "Now Selected : " + direction.name());
+    }
+});
+```
+
+## Set, Get Direction Programmatically
+```java
+// if you want switch button direction to left
+stickySwitch.setDirection(StickySwitch.Direction.LEFT);
+
+// Get current Direction
+stickySwitch.getDirection(); // StickySwitch.Direction.LEFT
 ```
 
 # Reference
