@@ -326,7 +326,7 @@ class StickySwitch : View {
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         isSwitchOn = isSwitchOn.not()
         animateCheckState(isSwitchOn)
-        onSelectedChangeListener?.onSelectedChange(if (isSwitchOn) Direction.RIGHT else Direction.LEFT)
+        notifySelectdChange()
 
         return super.onTouchEvent(event)
     }
@@ -362,6 +362,30 @@ class StickySwitch : View {
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         super.onLayout(changed, left, top, right, bottom)
+    }
+
+    fun setDirection(direction: Direction) {
+        var newSwitchState = isSwitchOn
+        when (direction) {
+            Direction.LEFT -> newSwitchState = false
+            Direction.RIGHT -> newSwitchState = true
+        }
+
+        if (newSwitchState != isSwitchOn) {
+            isSwitchOn = newSwitchState
+            notifySelectdChange()
+        }
+    }
+
+    fun getDirection(): Direction {
+        when (isSwitchOn) {
+            true -> return Direction.RIGHT
+            false -> return Direction.LEFT
+        }
+    }
+
+    private fun notifySelectdChange() {
+        onSelectedChangeListener?.onSelectedChange(if (isSwitchOn) Direction.RIGHT else Direction.LEFT)
     }
 
     private fun measureText() {
