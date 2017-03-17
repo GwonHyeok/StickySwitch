@@ -24,6 +24,9 @@
         app:rightIcon="@drawable/ic_female"
         app:rightText="Female"
         app:selectedTextSize="14sp"
+        app:sliderBackgroundColor="@color/colorSliderBackground"
+        app:switchColor="@color/colorSwitchColor"
+        app:textColor="@color/colorTextColor"
         app:textSize="12sp" />
 
 </RelativeLayout>

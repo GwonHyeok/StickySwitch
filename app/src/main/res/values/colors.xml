@@ -4,4 +4,7 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorBackground">#FF26292D</color>
+    <color name="colorSliderBackground">#FF181821</color>
+    <color name="colorTextColor">#FFFFFFFF</color>
+    <color name="colorSwitchColor">#FF2371FA</color>
 </resources>
