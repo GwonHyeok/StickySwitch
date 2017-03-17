@@ -37,8 +37,9 @@ dependencies {
 Add `StickySwitch` to your xml layout
 ```xml
 <io.ghyeok.stickyswitch.widget.StickySwitch
-        android:layout_width="160dp"
-        android:layout_height="100dp"
+        android:id="@+id/sticky_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         app:iconPadding="18dp"
         app:iconSize="22dp"
@@ -47,20 +48,26 @@ Add `StickySwitch` to your xml layout
         app:rightIcon="@drawable/ic_female"
         app:rightText="Female"
         app:selectedTextSize="14sp"
+        app:sliderBackgroundColor="@color/colorSliderBackground"
+        app:switchColor="@color/colorSwitchColor"
+        app:textColor="@color/colorTextColor"
         app:textSize="12sp" />
 ```
 
 ## Available attributes
-|       Name       |    Type   | Description |
-|:----------------:|:---------:|:-----------:|
-|    iconPadding   | dimension |      -      |
-|     iconSize     | dimension |      -      |
-|     leftIcon     |  integer  |      -      |
-|     leftText     |   string  |      -      |
-|     rightIcon    |  integer  |      -      |
-|     rightText    |   string  |      -      |
-| selectedTextSize | dimension |      -      |
-|     textSize     | dimension |      -      |
+|          Name          |    Type   | Description |
+|:----------------------:|:---------:|:-----------:|
+|       iconPadding      | dimension |      -      |
+|        iconSize        | dimension |      -      |
+|        leftIcon        |  integer  |      -      |
+|        leftText        |   string  |      -      |
+|        rightIcon       |  integer  |      -      |
+|        rightText       |   string  |      -      |
+|    selectedTextSize    | dimension |      -      |
+|        textSize        | dimension |      -      |
+|       switchColor      |   color   |      -      |
+|  sliderBackgroundColor |   color   |      -      |
+|        textColor       |   color   |      -      |
 
 ## Status change notification
 StickySwitch.Direction has two value (LEFT, RIGHT)
