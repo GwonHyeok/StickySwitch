@@ -9,5 +9,8 @@
         <attr name="iconPadding" format="reference|dimension" />
         <attr name="textSize" format="reference|dimension" />
         <attr name="selectedTextSize" format="reference|dimension" />
+        <attr name="switchColor" format="reference|color" />
+        <attr name="sliderBackgroundColor" format="reference|color" />
+        <attr name="textColor" format="reference|color" />
     </declare-styleable>
 </resources>

@@ -66,6 +66,7 @@ class StickySwitch : View {
     // colors
     @ColorInt private var sliderBackgroundColor = 0XFF181821.toInt()
     @ColorInt private var switchColor = 0xFF2371FA.toInt()
+    @ColorInt private var textColor = 0xFFFFFFFF.toInt()
 
     // rounded rect
     private val sliderBackgroundPaint = Paint()
@@ -182,6 +183,15 @@ class StickySwitch : View {
         leftTextSize = selectedTextSize.toFloat()
         rightTextSize = textSize.toFloat()
 
+        // slider background color
+        sliderBackgroundColor = typedArray.getColor(R.styleable.StickySwitch_sliderBackgroundColor, sliderBackgroundColor)
+
+        // switch color
+        switchColor = typedArray.getColor(R.styleable.StickySwitch_switchColor, switchColor)
+
+        // text color
+        textColor = typedArray.getColor(R.styleable.StickySwitch_textColor, textColor)
+
         typedArray.recycle()
     }
 
@@ -288,9 +298,9 @@ class StickySwitch : View {
         val bottomSpaceHeight = measuredHeight - (circleRadius * 2)
 
         // set text paint
-        leftTextPaint.color = Color.WHITE
+        leftTextPaint.color = textColor
         leftTextPaint.alpha = leftTextAlpha
-        rightTextPaint.color = Color.WHITE
+        rightTextPaint.color = textColor
         rightTextPaint.alpha = rightTextAlpha
 
         // set text size
