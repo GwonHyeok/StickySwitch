@@ -60,8 +60,16 @@ class StickySwitch : View {
     private var iconPadding = 70
 
     // text variables
-    private var leftText = ""
-    private var rightText = ""
+    var leftText = ""
+        set(value) {
+            field = value
+            invalidate()
+        }
+    var rightText = ""
+        set(value) {
+            field = value
+            invalidate()
+        }
 
     // colors
     @ColorInt private var sliderBackgroundColor = 0XFF181821.toInt()
@@ -392,6 +400,14 @@ class StickySwitch : View {
         when (isSwitchOn) {
             true -> return Direction.RIGHT
             false -> return Direction.LEFT
+        }
+    }
+
+    @JvmOverloads
+    fun getText(direction: Direction = getDirection()): String {
+        when (direction) {
+            Direction.LEFT -> return leftText
+            Direction.RIGHT -> return rightText
         }
     }
 
