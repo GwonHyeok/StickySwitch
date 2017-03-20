@@ -11,7 +11,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 25
         versionCode 1
-        versionName "0.0.4"
+        versionName "0.0.5"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -45,7 +45,7 @@ publish {
     userOrg = 'ghyeok'
     groupId = 'io.ghyeok.lib'
     artifactId = 'sticky-switch'
-    publishVersion = '0.0.4'
+    publishVersion = '0.0.5'
     desc = 'Sticky Switch'
     website = 'https://github.com/GwonHyeok/StickySwitch'
     issueTracker = 'https://github.com/GwonHyeok/StickySwitch/issues'
