@@ -383,6 +383,7 @@ class StickySwitch : View {
 
         if (newSwitchState != isSwitchOn) {
             isSwitchOn = newSwitchState
+            animateCheckState(isSwitchOn)
             notifySelectdChange()
         }
     }
