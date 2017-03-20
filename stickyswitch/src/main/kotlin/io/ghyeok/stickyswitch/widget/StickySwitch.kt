@@ -412,7 +412,7 @@ class StickySwitch : View {
     }
 
     private fun notifySelectdChange() {
-        onSelectedChangeListener?.onSelectedChange(if (isSwitchOn) Direction.RIGHT else Direction.LEFT)
+        onSelectedChangeListener?.onSelectedChange(if (isSwitchOn) Direction.RIGHT else Direction.LEFT, getText())
     }
 
     private fun measureText() {
@@ -495,6 +495,6 @@ class StickySwitch : View {
     }
 
     interface OnSelectedChangeListener {
-        fun onSelectedChange(direction: Direction)
+        fun onSelectedChange(direction: Direction, text: String)
     }
 }
