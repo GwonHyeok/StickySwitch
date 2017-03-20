@@ -21,8 +21,8 @@ public class MainActivity extends AppCompatActivity {
         StickySwitch stickySwitch = (StickySwitch) findViewById(R.id.sticky_switch);
         stickySwitch.setOnSelectedChangeListener(new StickySwitch.OnSelectedChangeListener() {
             @Override
-            public void onSelectedChange(@NotNull StickySwitch.Direction direction) {
-                Log.d(TAG, "Now Selected : " + direction.name());
+            public void onSelectedChange(@NotNull StickySwitch.Direction direction, @NotNull String text) {
+                Log.d(TAG, "Now Selected : " + direction.name() + ", Current Text : " + text);
             }
         });
     }
