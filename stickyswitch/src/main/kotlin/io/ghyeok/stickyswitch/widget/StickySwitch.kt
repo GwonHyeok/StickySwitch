@@ -32,6 +32,7 @@ import android.graphics.*
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.support.annotation.ColorInt
+import android.support.annotation.DrawableRes
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -52,8 +53,16 @@ class StickySwitch : View {
     private val TAG = "LIQUID_SWITCH"
 
     // left, right icon drawable
-    private var leftIconDrawable: Drawable? = null
-    private var rightIconDrawable: Drawable? = null
+    var leftIcon: Drawable? = null
+        set(drawable) {
+            field = drawable
+            invalidate()
+        }
+    private var rightIcon: Drawable? = null
+        set(drawable) {
+            field = drawable
+            invalidate()
+        }
 
     // icon variables
     private var iconSize = 100
@@ -72,9 +81,21 @@ class StickySwitch : View {
         }
 
     // colors
-    @ColorInt private var sliderBackgroundColor = 0XFF181821.toInt()
-    @ColorInt private var switchColor = 0xFF2371FA.toInt()
-    @ColorInt private var textColor = 0xFFFFFFFF.toInt()
+    var sliderBackgroundColor = 0XFF181821.toInt()
+        set(@ColorInt colorInt) {
+            field = colorInt
+            invalidate()
+        }
+    var switchColor = 0xFF2371FA.toInt()
+        set(@ColorInt colorInt) {
+            field = colorInt
+            invalidate()
+        }
+    var textColor = 0xFFFFFFFF.toInt()
+        set(@ColorInt colorInt) {
+            field = colorInt
+            invalidate()
+        }
 
     // rounded rect
     private val sliderBackgroundPaint = Paint()
@@ -152,6 +173,8 @@ class StickySwitch : View {
             invalidate()
         }
 
+    private val isUnderLollipop = Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP
+
     // listener
     var onSelectedChangeListener: OnSelectedChangeListener? = null
 
@@ -172,11 +195,11 @@ class StickySwitch : View {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.StickySwitch, defStyleAttr, defStyleRes)
 
         // left switch icon
-        leftIconDrawable = typedArray.getDrawable(R.styleable.StickySwitch_leftIcon)
+        leftIcon = typedArray.getDrawable(R.styleable.StickySwitch_leftIcon)
         leftText = typedArray.getString(R.styleable.StickySwitch_leftText) ?: leftText
 
         // right switch icon
-        rightIconDrawable = typedArray.getDrawable(R.styleable.StickySwitch_rightIcon)
+        rightIcon = typedArray.getDrawable(R.styleable.StickySwitch_rightIcon)
         rightText = typedArray.getString(R.styleable.StickySwitch_rightText) ?: rightText
 
         // icon size
@@ -276,29 +299,29 @@ class StickySwitch : View {
         canvas?.restore()
 
         // draw left icon
-        if (leftIconDrawable != null) {
+        if (leftIcon != null) {
             canvas?.save()
-            leftIconDrawable?.bounds?.set(iconMarginLeft,
+            leftIcon?.bounds?.set(iconMarginLeft,
                     iconMarginTop,
                     iconMarginLeft + iconWidth,
                     iconMarginTop + iconHeight
             )
-            leftIconDrawable?.alpha = if (isSwitchOn) 153 else 255
-            leftIconDrawable?.draw(canvas)
+            leftIcon?.alpha = if (isSwitchOn) 153 else 255
+            leftIcon?.draw(canvas)
             canvas?.restore()
         }
 
         // draw right icon
-        if (rightIconDrawable != null) {
+        if (rightIcon != null) {
             canvas?.save()
-            rightIconDrawable?.bounds?.set(
+            rightIcon?.bounds?.set(
                     measuredWidth - iconWidth - iconMarginRight,
                     iconMarginTop,
                     measuredWidth - iconMarginRight,
                     iconMarginTop + iconHeight
             )
-            rightIconDrawable?.alpha = if (!isSwitchOn) 153 else 255
-            rightIconDrawable?.draw(canvas)
+            rightIcon?.alpha = if (!isSwitchOn) 153 else 255
+            rightIcon?.draw(canvas)
             canvas?.restore()
         }
 
@@ -409,6 +432,22 @@ class StickySwitch : View {
             Direction.LEFT -> return leftText
             Direction.RIGHT -> return rightText
         }
+    }
+
+    fun setLeftIcon(@DrawableRes resourceId: Int) {
+        this.leftIcon = this.getDrawable(resourceId)
+
+    }
+
+    fun setRightIcon(@DrawableRes resourceId: Int) {
+        this.rightIcon = this.getDrawable(resourceId)
+    }
+
+    private fun getDrawable(@DrawableRes resourceId: Int): Drawable {
+        if (isUnderLollipop)
+            return resources.getDrawable(resourceId)
+        else
+            return resources.getDrawable(resourceId, null)
     }
 
     private fun notifySelectdChange() {
