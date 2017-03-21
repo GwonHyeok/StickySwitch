@@ -90,26 +90,53 @@ stickySwitch.setOnSelectedChangeListener(new StickySwitch.OnSelectedChangeListen
 });
 ```
 
-## Set, Get Direction Programmatically
+## Direction
+### if you want switch button direction to left
 ```java
-// if you want switch button direction to left
 stickySwitch.setDirection(StickySwitch.Direction.LEFT);
+```
 
-// Get current Direction
+### Get current Direction
+```java
 stickySwitch.getDirection(); // StickySwitch.Direction.LEFT
 ```
 
-## Set, Get Text Programmatically
+## Text
+### get current status text
 ```java
-// get current status text
 stickySwitch.getText()
+```
 
-// get specific status text
+### get specific status text
+```java
 stickySwitch.getText(StickySwitch.Direction.LEFT) // Get leftText
+```
 
-// set left or right text
+### set left or right text
+```java
 stickySwitch.setLeftText("Left");
 stickySwitch.setRightText("Right");
+```
+
+## Icon
+### set left icon with drawableRes
+```java
+stickySwitch.setLeftIcon(R.mipmap.ic_launcher);
+```
+
+### set left icon with drawable
+```java
+Drawable drawable = getDrawable(R.mipmap.ic_launcher);
+stickySwitch.setLeftIcon(drawable);
+```
+
+## Color
+### set colors
+```java
+// The color format must be (0xAARRGGBB)
+stickySwitch.setSliderBackgroundColor(0xFF181821);
+stickySwitch.setSwitchColor(0xFF2371FA);
+stickySwitch.setTextColor(0xFFFFFFFF);
 ```
 
 # Reference
