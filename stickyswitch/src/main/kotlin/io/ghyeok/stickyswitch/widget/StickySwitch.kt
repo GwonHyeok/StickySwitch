@@ -106,6 +106,13 @@ class StickySwitch : View {
             invalidate()
         }
 
+    // hide text options
+    var isShowText = true
+        set(showText) {
+            field = showText
+            invalidate()
+        }
+
     // rounded rect
     private val sliderBackgroundPaint = Paint()
     private val sliderBackgroundRect = RectF()
@@ -347,26 +354,29 @@ class StickySwitch : View {
         leftTextPaint.textSize = leftTextSize
         rightTextPaint.textSize = rightTextSize
 
-        // measure text size
-        measureText()
+        // draw text when isShowText is true
+        if (isShowText) {
+            // measure text size
+            measureText()
 
-        // left text position
-        val leftTextX = (circleRadius * 2 - leftTextRect.width()) * 0.5
-        val leftTextY = (circleRadius * 2) + (bottomSpaceHeight * 0.5) + (leftTextRect.height() * 0.25)
+            // left text position
+            val leftTextX = (circleRadius * 2 - leftTextRect.width()) * 0.5
+            val leftTextY = (circleRadius * 2) + (bottomSpaceHeight * 0.5) + (leftTextRect.height() * 0.25)
 
-        // draw left text
-        canvas?.save()
-        canvas?.drawText(leftText, leftTextX.toFloat(), leftTextY.toFloat(), leftTextPaint)
-        canvas?.restore()
+            // draw left text
+            canvas?.save()
+            canvas?.drawText(leftText, leftTextX.toFloat(), leftTextY.toFloat(), leftTextPaint)
+            canvas?.restore()
 
-        // right text position
-        val rightTextX = ((circleRadius * 2 - rightTextRect.width()) * 0.5) + (measuredWidth - (circleRadius * 2))
-        val rightTextY = (circleRadius * 2) + (bottomSpaceHeight * 0.5) + (rightTextRect.height() * 0.25)
+            // right text position
+            val rightTextX = ((circleRadius * 2 - rightTextRect.width()) * 0.5) + (measuredWidth - (circleRadius * 2))
+            val rightTextY = (circleRadius * 2) + (bottomSpaceHeight * 0.5) + (rightTextRect.height() * 0.25)
 
-        // draw right text
-        canvas?.save()
-        canvas?.drawText(rightText, rightTextX.toFloat(), rightTextY.toFloat(), rightTextPaint)
-        canvas?.restore()
+            // draw right text
+            canvas?.save()
+            canvas?.drawText(rightText, rightTextX.toFloat(), rightTextY.toFloat(), rightTextPaint)
+            canvas?.restore()
+        }
     }
 
     private fun evaluateBounceRate(value: Double): Double {
