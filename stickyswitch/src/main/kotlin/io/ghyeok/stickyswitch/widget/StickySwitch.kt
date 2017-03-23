@@ -367,7 +367,7 @@ class StickySwitch : View {
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         isSwitchOn = isSwitchOn.not()
         animateCheckState(isSwitchOn)
-        notifySelectdChange()
+        notifySelectedChange()
 
         return super.onTouchEvent(event)
     }
@@ -415,7 +415,7 @@ class StickySwitch : View {
         if (newSwitchState != isSwitchOn) {
             isSwitchOn = newSwitchState
             animateCheckState(isSwitchOn)
-            notifySelectdChange()
+            notifySelectedChange()
         }
     }
 
@@ -450,7 +450,7 @@ class StickySwitch : View {
             return resources.getDrawable(resourceId, null)
     }
 
-    private fun notifySelectdChange() {
+    private fun notifySelectedChange() {
         onSelectedChangeListener?.onSelectedChange(if (isSwitchOn) Direction.RIGHT else Direction.LEFT, getText())
     }
 
