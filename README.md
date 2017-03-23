@@ -118,6 +118,18 @@ stickySwitch.setLeftText("Left");
 stickySwitch.setRightText("Right");
 ```
 
+### set text typeface
+```java
+stickySwitch.setTypeFace(Typeface.DEFAULT_BOLD);
+```
+
+### toggle text visibility
+```java
+stickySwitch.setShowText(true); // show text
+
+stickySwitch.setShowText(false); // hide text
+```
+
 ## Icon
 ### set left icon with drawableRes
 ```java
