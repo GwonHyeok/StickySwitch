@@ -97,6 +97,15 @@ class StickySwitch : View {
             invalidate()
         }
 
+    // typeface
+    var typeFace: Typeface? = null
+        set(typeFace) {
+            field = typeFace
+            leftTextPaint.typeface = typeFace
+            rightTextPaint.typeface = typeFace
+            invalidate()
+        }
+
     // rounded rect
     private val sliderBackgroundPaint = Paint()
     private val sliderBackgroundRect = RectF()
