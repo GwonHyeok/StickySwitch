@@ -242,6 +242,11 @@ class StickySwitch : View {
         typedArray.recycle()
     }
 
+    //used to draw connection between two circle
+    private val connectionPath = Path()
+    val xParam = 1/2f //Math.sin(Math.PI / 6).toFloat()
+    val yParam = 0.86602540378f //Math.cos(Math.PI / 6).toFloat()
+
     /**
      * Draw Sticky Switch View
      *
@@ -304,13 +309,53 @@ class StickySwitch : View {
 
         // circular rectangle
         val rectL = ccX
-        val rectT = circleRadius - circleRadius / 2
         val rectR = ocX
-        val rectB = circleRadius + circleRadius / 2
 
         canvas?.drawCircle(ocX.toFloat(), ocY, evaluateBounceRate(ocRadius).toFloat(), switchBackgroundPaint)
         canvas?.drawCircle(ccX.toFloat(), ccY, evaluateBounceRate(ccRadius).toFloat(), switchBackgroundPaint)
-        canvas?.drawRect(rectL.toFloat(), rectT, rectR.toFloat(), rectB, switchBackgroundPaint)
+
+        // curved connection between two circles
+        if (animatePercent > 0 && animatePercent < 1) {
+
+            connectionPath.rewind()
+
+            //puts points of rectangle on circle, on point  π/6 rad
+            val rectLCurve = rectL.toFloat() + ccRadius.toFloat() * xParam
+            val rectRCurve = rectR.toFloat() - ccRadius.toFloat() * xParam
+
+            val rectTCurve = circleRadius - ccRadius.toFloat() * yParam
+            val rectBCurve = circleRadius + ccRadius.toFloat() * yParam
+
+            //middle points through which goes cubic interpolation
+            val middlePointX = (rectRCurve + rectLCurve) / 2
+            val middlePointY = (rectTCurve + rectBCurve) / 2
+
+            // draws 'rectangle', but in the way that top line is concave, and bottom is convex
+            connectionPath.moveTo(rectLCurve, rectTCurve)
+            connectionPath.cubicTo(
+                    rectLCurve,
+                    rectTCurve,
+                    middlePointX,
+                    middlePointY,
+                    rectRCurve,
+                    rectTCurve
+            )
+            connectionPath.lineTo(
+                    rectRCurve,
+                    rectBCurve
+            )
+            connectionPath.cubicTo(
+                    rectRCurve,
+                    rectBCurve,
+                    middlePointX,
+                    middlePointY,
+                    rectLCurve,
+                    rectBCurve
+            )
+            connectionPath.close()
+
+            canvas?.drawPath(connectionPath, switchBackgroundPaint)
+        }
 
         canvas?.restore()
 
