@@ -211,33 +211,33 @@ class StickySwitch : View {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.StickySwitch, defStyleAttr, defStyleRes)
 
         // left switch icon
-        leftIcon = typedArray.getDrawable(R.styleable.StickySwitch_leftIcon)
-        leftText = typedArray.getString(R.styleable.StickySwitch_leftText) ?: leftText
+        leftIcon = typedArray.getDrawable(R.styleable.StickySwitch_ss_leftIcon)
+        leftText = typedArray.getString(R.styleable.StickySwitch_ss_leftText) ?: leftText
 
         // right switch icon
-        rightIcon = typedArray.getDrawable(R.styleable.StickySwitch_rightIcon)
-        rightText = typedArray.getString(R.styleable.StickySwitch_rightText) ?: rightText
+        rightIcon = typedArray.getDrawable(R.styleable.StickySwitch_ss_rightIcon)
+        rightText = typedArray.getString(R.styleable.StickySwitch_ss_rightText) ?: rightText
 
         // icon size
-        iconSize = typedArray.getDimensionPixelSize(R.styleable.StickySwitch_iconSize, iconSize)
-        iconPadding = typedArray.getDimensionPixelSize(R.styleable.StickySwitch_iconPadding, iconPadding)
+        iconSize = typedArray.getDimensionPixelSize(R.styleable.StickySwitch_ss_iconSize, iconSize)
+        iconPadding = typedArray.getDimensionPixelSize(R.styleable.StickySwitch_ss_iconPadding, iconPadding)
 
         // saved text size
-        textSize = typedArray.getDimensionPixelSize(R.styleable.StickySwitch_textSize, textSize)
-        selectedTextSize = typedArray.getDimensionPixelSize(R.styleable.StickySwitch_selectedTextSize, selectedTextSize)
+        textSize = typedArray.getDimensionPixelSize(R.styleable.StickySwitch_ss_textSize, textSize)
+        selectedTextSize = typedArray.getDimensionPixelSize(R.styleable.StickySwitch_ss_selectedTextSize, selectedTextSize)
 
         // current text size
         leftTextSize = selectedTextSize.toFloat()
         rightTextSize = textSize.toFloat()
 
         // slider background color
-        sliderBackgroundColor = typedArray.getColor(R.styleable.StickySwitch_sliderBackgroundColor, sliderBackgroundColor)
+        sliderBackgroundColor = typedArray.getColor(R.styleable.StickySwitch_ss_sliderBackgroundColor, sliderBackgroundColor)
 
         // switch color
-        switchColor = typedArray.getColor(R.styleable.StickySwitch_switchColor, switchColor)
+        switchColor = typedArray.getColor(R.styleable.StickySwitch_ss_switchColor, switchColor)
 
         // text color
-        textColor = typedArray.getColor(R.styleable.StickySwitch_textColor, textColor)
+        textColor = typedArray.getColor(R.styleable.StickySwitch_ss_textColor, textColor)
 
         typedArray.recycle()
     }
