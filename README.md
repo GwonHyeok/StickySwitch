@@ -41,33 +41,33 @@ Add `StickySwitch` to your xml layout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        app:iconPadding="18dp"
-        app:iconSize="22dp"
-        app:leftIcon="@drawable/ic_male"
-        app:leftText="Male"
-        app:rightIcon="@drawable/ic_female"
-        app:rightText="Female"
-        app:selectedTextSize="14sp"
-        app:sliderBackgroundColor="@color/colorSliderBackground"
-        app:switchColor="@color/colorSwitchColor"
-        app:textColor="@color/colorTextColor"
-        app:textSize="12sp" />
+        app:ss_iconPadding="18dp"
+        app:ss_iconSize="22dp"
+        app:ss_leftIcon="@drawable/ic_male"
+        app:ss_leftText="Male"
+        app:ss_rightIcon="@drawable/ic_female"
+        app:ss_rightText="Female"
+        app:ss_selectedTextSize="14sp"
+        app:ss_sliderBackgroundColor="@color/colorSliderBackground"
+        app:ss_switchColor="@color/colorSwitchColor"
+        app:ss_textColor="@color/colorTextColor"
+        app:ss_textSize="12sp" />
 ```
 
 ## Available attributes
-|          Name          |    Type   | Description |
-|:----------------------:|:---------:|:-----------:|
-|       iconPadding      | dimension |      -      |
-|        iconSize        | dimension |      -      |
-|        leftIcon        |  integer  |      -      |
-|        leftText        |   string  |      -      |
-|        rightIcon       |  integer  |      -      |
-|        rightText       |   string  |      -      |
-|    selectedTextSize    | dimension |      -      |
-|        textSize        | dimension |      -      |
-|       switchColor      |   color   |      -      |
-|  sliderBackgroundColor |   color   |      -      |
-|        textColor       |   color   |      -      |
+|            Name           |    Type   | Description |
+|:-------------------------:|:---------:|:-----------:|
+|       ss_iconPadding      | dimension |      -      |
+|        ss_iconSize        | dimension |      -      |
+|        ss_leftIcon        |  integer  |      -      |
+|        ss_leftText        |   string  |      -      |
+|        ss_rightIcon       |  integer  |      -      |
+|        ss_rightText       |   string  |      -      |
+|    ss_selectedTextSize    | dimension |      -      |
+|        ss_textSize        | dimension |      -      |
+|       ss_switchColor      |   color   |      -      |
+|  ss_sliderBackgroundColor |   color   |      -      |
+|        ss_textColor       |   color   |      -      |
 
 ## Status change notification
 StickySwitch.Direction has two value (LEFT, RIGHT)
