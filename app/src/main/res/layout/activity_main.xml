@@ -17,6 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        app:ss_animationDuration="600"
         app:ss_iconPadding="18dp"
         app:ss_iconSize="22dp"
         app:ss_leftIcon="@drawable/ic_male"
