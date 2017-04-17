@@ -33,6 +33,7 @@ import android.graphics.drawable.Drawable
 import android.os.Build
 import android.support.annotation.ColorInt
 import android.support.annotation.DrawableRes
+import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -192,8 +193,6 @@ class StickySwitch : View {
             field = value
             invalidate()
         }
-
-    private val isUnderLollipop = Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP
 
     // listener
     var onSelectedChangeListener: OnSelectedChangeListener? = null
@@ -476,12 +475,7 @@ class StickySwitch : View {
         this.rightIcon = this.getDrawable(resourceId)
     }
 
-    private fun getDrawable(@DrawableRes resourceId: Int): Drawable {
-        if (isUnderLollipop)
-            return resources.getDrawable(resourceId)
-        else
-            return resources.getDrawable(resourceId, null)
-    }
+    private fun getDrawable(@DrawableRes resourceId: Int) = ContextCompat.getDrawable(context, resourceId)
 
     private fun notifySelectedChange() {
         onSelectedChangeListener?.onSelectedChange(if (isSwitchOn) Direction.RIGHT else Direction.LEFT, getText())
