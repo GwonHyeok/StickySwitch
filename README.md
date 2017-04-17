@@ -41,6 +41,7 @@ Add `StickySwitch` to your xml layout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        app:ss_animationDuration="600"
         app:ss_iconPadding="18dp"
         app:ss_iconSize="22dp"
         app:ss_leftIcon="@drawable/ic_male"
@@ -68,6 +69,7 @@ Add `StickySwitch` to your xml layout
 |       ss_switchColor      |   color   |      -      |
 |  ss_sliderBackgroundColor |   color   |      -      |
 |        ss_textColor       |   color   |      -      |
+|    ss_animationDuration   |  integer  |      -      |
 
 ## Status change notification
 StickySwitch.Direction has two value (LEFT, RIGHT)
@@ -154,6 +156,13 @@ stickySwitch.setLeftIcon(drawable);
 stickySwitch.setSliderBackgroundColor(0xFF181821);
 stickySwitch.setSwitchColor(0xFF2371FA);
 stickySwitch.setTextColor(0xFFFFFFFF);
+```
+
+## Animation
+### custom duration
+```java
+// Animation duration to 1000ms (default duration is 600ms)
+stickySwitch.setAnimationDuration(1000);
 ```
 
 # Reference
