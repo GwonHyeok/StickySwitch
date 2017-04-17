@@ -96,6 +96,11 @@ stickySwitch.setOnSelectedChangeListener(new StickySwitch.OnSelectedChangeListen
 stickySwitch.setDirection(StickySwitch.Direction.LEFT);
 ```
 
+### if you want switch button direction to right without animation
+```java
+stickySwitch.setDirection(StickySwitch.Direction.RIGHT, false);
+```
+
 ### Get current Direction
 ```java
 stickySwitch.getDirection(); // StickySwitch.Direction.LEFT
