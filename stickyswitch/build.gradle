@@ -11,7 +11,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 25
         versionCode 1
-        versionName "0.0.8"
+        versionName "0.0.9"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -32,7 +32,7 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.1.1'
+    compile 'com.android.support:appcompat-v7:25.3.1'
     testCompile 'junit:junit:4.12'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 }
@@ -45,7 +45,7 @@ publish {
     userOrg = 'ghyeok'
     groupId = 'io.ghyeok.lib'
     artifactId = 'sticky-switch'
-    publishVersion = '0.0.8'
+    publishVersion = '0.0.9'
     desc = 'Sticky Switch'
     website = 'https://github.com/GwonHyeok/StickySwitch'
     issueTracker = 'https://github.com/GwonHyeok/StickySwitch/issues'
