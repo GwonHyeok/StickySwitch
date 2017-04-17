@@ -138,13 +138,17 @@ class StickySwitch : View {
             invalidate()
         }
 
+    // text max,min transparency
+    private val textAlphaMax = 255
+    private val textAlphaMin = 163
+
     // text color transparency
-    private var leftTextAlpha = 255
+    private var leftTextAlpha = textAlphaMax
         set(value) {
             field = value
             invalidate()
         }
-    private var rightTextAlpha = 163
+    private var rightTextAlpha = textAlphaMin
         set(value) {
             field = value
             invalidate()
@@ -193,6 +197,9 @@ class StickySwitch : View {
 
     // listener
     var onSelectedChangeListener: OnSelectedChangeListener? = null
+
+    // AnimatorSet
+    var animatorSet: AnimatorSet? = null
 
     constructor(context: Context) : this(context, null)
 
@@ -424,7 +431,8 @@ class StickySwitch : View {
         super.onLayout(changed, left, top, right, bottom)
     }
 
-    fun setDirection(direction: Direction) {
+    @JvmOverloads
+    fun setDirection(direction: Direction, isAnimate: Boolean = true) {
         var newSwitchState = isSwitchOn
         when (direction) {
             Direction.LEFT -> newSwitchState = false
@@ -432,8 +440,14 @@ class StickySwitch : View {
         }
 
         if (newSwitchState != isSwitchOn) {
+
             isSwitchOn = newSwitchState
-            animateCheckState(isSwitchOn)
+
+            // cancel animation when if animate is running
+            animatorSet?.cancel()
+
+            // when isAnimate is false not showing liquid animation
+            if (isAnimate) animateCheckState(isSwitchOn) else changeCheckState(isSwitchOn)
             notifySelectedChange()
         }
     }
@@ -479,20 +493,37 @@ class StickySwitch : View {
     }
 
     private fun animateCheckState(newCheckedState: Boolean) {
-        val animatorSet = AnimatorSet()
-        animatorSet.playTogether(
-                getLiquidAnimator(newCheckedState),
-                leftTextSizeAnimator(newCheckedState),
-                rightTextSizeAnimator(newCheckedState),
-                leftTextAlphaAnimator(newCheckedState),
-                rightTextAlphaAnimator(newCheckedState),
-                getBounceAnimator()
-        )
-        animatorSet.start()
+        this.animatorSet = AnimatorSet()
+        if (animatorSet != null) {
+            animatorSet?.playTogether(
+                    getLiquidAnimator(newCheckedState),
+                    leftTextSizeAnimator(newCheckedState),
+                    rightTextSizeAnimator(newCheckedState),
+                    leftTextAlphaAnimator(newCheckedState),
+                    rightTextAlphaAnimator(newCheckedState),
+                    getBounceAnimator()
+            )
+            animatorSet?.start()
+        }
+    }
+
+    private fun changeCheckState(newCheckedState: Boolean) {
+
+        // Change TextAlpha Without Animation
+        leftTextAlpha = if (newCheckedState) textAlphaMin else textAlphaMax
+        rightTextAlpha = if (newCheckedState) textAlphaMax else textAlphaMin
+
+        // Change TextSize without animation
+        leftTextSize = if (newCheckedState) textSize.toFloat() else selectedTextSize.toFloat()
+        rightTextSize = if (newCheckedState) selectedTextSize.toFloat() else textSize.toFloat()
+
+        // Change Animate Percent(LiquidAnimation) without animation
+        animatePercent = if (newCheckedState) 1.0 else 0.0
+        animateBounceRate = 1.0
     }
 
     private fun leftTextAlphaAnimator(newCheckedState: Boolean): Animator {
-        val toAlpha = if (newCheckedState) 163 else 255
+        val toAlpha = if (newCheckedState) textAlphaMin else textAlphaMax
         val animator = ValueAnimator.ofInt(leftTextAlpha, toAlpha)
         animator.interpolator = AccelerateDecelerateInterpolator()
         animator.startDelay = 200
@@ -502,7 +533,7 @@ class StickySwitch : View {
     }
 
     private fun rightTextAlphaAnimator(newCheckedState: Boolean): Animator {
-        val toAlpha = if (newCheckedState) 255 else 163
+        val toAlpha = if (newCheckedState) textAlphaMax else textAlphaMin
         val animator = ValueAnimator.ofInt(rightTextAlpha, toAlpha)
         animator.interpolator = AccelerateDecelerateInterpolator()
         animator.startDelay = 200
