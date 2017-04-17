@@ -12,5 +12,6 @@
         <attr name="ss_switchColor" format="reference|color" />
         <attr name="ss_sliderBackgroundColor" format="reference|color" />
         <attr name="ss_textColor" format="reference|color" />
+        <attr name="ss_animationDuration" format="reference|integer" />
     </declare-styleable>
 </resources>

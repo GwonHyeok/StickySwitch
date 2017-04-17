@@ -197,8 +197,9 @@ class StickySwitch : View {
     // listener
     var onSelectedChangeListener: OnSelectedChangeListener? = null
 
-    // AnimatorSet
+    // AnimatorSet, Animation Options
     var animatorSet: AnimatorSet? = null
+    var animationDuration: Long = 600
 
     constructor(context: Context) : this(context, null)
 
@@ -244,6 +245,9 @@ class StickySwitch : View {
 
         // text color
         textColor = typedArray.getColor(R.styleable.StickySwitch_ss_textColor, textColor)
+
+        // animation duration
+        animationDuration = typedArray.getInt(R.styleable.StickySwitch_ss_animationDuration, animationDuration.toInt()).toLong()
 
         typedArray.recycle()
     }
@@ -520,8 +524,8 @@ class StickySwitch : View {
         val toAlpha = if (newCheckedState) textAlphaMin else textAlphaMax
         val animator = ValueAnimator.ofInt(leftTextAlpha, toAlpha)
         animator.interpolator = AccelerateDecelerateInterpolator()
-        animator.startDelay = 200
-        animator.duration = 400
+        animator.startDelay = animationDuration / 3
+        animator.duration = animationDuration - (animationDuration / 3)
         animator.addUpdateListener { leftTextAlpha = (it.animatedValue as Int) }
         return animator
     }
@@ -530,8 +534,8 @@ class StickySwitch : View {
         val toAlpha = if (newCheckedState) textAlphaMax else textAlphaMin
         val animator = ValueAnimator.ofInt(rightTextAlpha, toAlpha)
         animator.interpolator = AccelerateDecelerateInterpolator()
-        animator.startDelay = 200
-        animator.duration = 400
+        animator.startDelay = animationDuration / 3
+        animator.duration = animationDuration - (animationDuration / 3)
         animator.addUpdateListener { rightTextAlpha = (it.animatedValue as Int) }
         return animator
     }
@@ -540,8 +544,8 @@ class StickySwitch : View {
         val toTextSize = if (newCheckedState) textSize else selectedTextSize
         val textSizeAnimator = ValueAnimator.ofFloat(leftTextSize, toTextSize.toFloat())
         textSizeAnimator.interpolator = AccelerateDecelerateInterpolator()
-        textSizeAnimator.startDelay = 200
-        textSizeAnimator.duration = 400
+        textSizeAnimator.startDelay = animationDuration / 3
+        textSizeAnimator.duration = animationDuration - (animationDuration / 3)
         textSizeAnimator.addUpdateListener { leftTextSize = (it.animatedValue as Float) }
         return textSizeAnimator
     }
@@ -550,15 +554,15 @@ class StickySwitch : View {
         val toTextSize = if (newCheckedState) selectedTextSize else textSize
         val textSizeAnimator = ValueAnimator.ofFloat(rightTextSize, toTextSize.toFloat())
         textSizeAnimator.interpolator = AccelerateDecelerateInterpolator()
-        textSizeAnimator.startDelay = 200
-        textSizeAnimator.duration = 400
+        textSizeAnimator.startDelay = animationDuration / 3
+        textSizeAnimator.duration = animationDuration - (animationDuration / 3)
         textSizeAnimator.addUpdateListener { rightTextSize = (it.animatedValue as Float) }
         return textSizeAnimator
     }
 
     private fun getLiquidAnimator(newCheckedState: Boolean): Animator {
         val liquidAnimator = ValueAnimator.ofFloat(animatePercent.toFloat(), if (newCheckedState) 1f else 0f)
-        liquidAnimator.duration = 600
+        liquidAnimator.duration = animationDuration
         liquidAnimator.interpolator = AccelerateInterpolator()
         liquidAnimator.addUpdateListener { animatePercent = (it.animatedValue as Float).toDouble() }
         return liquidAnimator
@@ -566,8 +570,8 @@ class StickySwitch : View {
 
     private fun getBounceAnimator(): Animator {
         val animator = ValueAnimator.ofFloat(1f, 0.9f, 1f)
-        animator.duration = 250
-        animator.startDelay = 600
+        animator.duration = (animationDuration * 0.41).toLong()
+        animator.startDelay = animationDuration
         animator.interpolator = DecelerateInterpolator()
         animator.addUpdateListener { animateBounceRate = (it.animatedValue as Float).toDouble() }
         return animator
