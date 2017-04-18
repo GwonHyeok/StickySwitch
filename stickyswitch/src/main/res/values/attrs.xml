@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="StickySwitch">
-        <attr name="leftIcon" format="reference|integer" />
-        <attr name="leftText" format="reference|string" />
-        <attr name="rightIcon" format="reference|integer" />
-        <attr name="rightText" format="reference|string" />
-        <attr name="iconSize" format="reference|dimension" />
-        <attr name="iconPadding" format="reference|dimension" />
-        <attr name="textSize" format="reference|dimension" />
-        <attr name="selectedTextSize" format="reference|dimension" />
-        <attr name="switchColor" format="reference|color" />
-        <attr name="sliderBackgroundColor" format="reference|color" />
-        <attr name="textColor" format="reference|color" />
+        <attr name="ss_leftIcon" format="reference|integer" />
+        <attr name="ss_leftText" format="reference|string" />
+        <attr name="ss_rightIcon" format="reference|integer" />
+        <attr name="ss_rightText" format="reference|string" />
+        <attr name="ss_iconSize" format="reference|dimension" />
+        <attr name="ss_iconPadding" format="reference|dimension" />
+        <attr name="ss_textSize" format="reference|dimension" />
+        <attr name="ss_selectedTextSize" format="reference|dimension" />
+        <attr name="ss_switchColor" format="reference|color" />
+        <attr name="ss_sliderBackgroundColor" format="reference|color" />
+        <attr name="ss_textColor" format="reference|color" />
+        <attr name="ss_animationDuration" format="reference|integer" />
     </declare-styleable>
 </resources>

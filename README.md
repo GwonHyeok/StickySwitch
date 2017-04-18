@@ -29,7 +29,7 @@ allprojects {
 Add the dependency
 ```Groovy
 dependencies {
-    compile 'com.github.GwonHyeok:StickySwitch:0.0.8'
+    compile 'com.github.GwonHyeok:StickySwitch:0.0.11'
 }
 ```
 
@@ -41,33 +41,35 @@ Add `StickySwitch` to your xml layout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        app:iconPadding="18dp"
-        app:iconSize="22dp"
-        app:leftIcon="@drawable/ic_male"
-        app:leftText="Male"
-        app:rightIcon="@drawable/ic_female"
-        app:rightText="Female"
-        app:selectedTextSize="14sp"
-        app:sliderBackgroundColor="@color/colorSliderBackground"
-        app:switchColor="@color/colorSwitchColor"
-        app:textColor="@color/colorTextColor"
-        app:textSize="12sp" />
+        app:ss_animationDuration="600"
+        app:ss_iconPadding="18dp"
+        app:ss_iconSize="22dp"
+        app:ss_leftIcon="@drawable/ic_male"
+        app:ss_leftText="Male"
+        app:ss_rightIcon="@drawable/ic_female"
+        app:ss_rightText="Female"
+        app:ss_selectedTextSize="14sp"
+        app:ss_sliderBackgroundColor="@color/colorSliderBackground"
+        app:ss_switchColor="@color/colorSwitchColor"
+        app:ss_textColor="@color/colorTextColor"
+        app:ss_textSize="12sp" />
 ```
 
 ## Available attributes
-|          Name          |    Type   | Description |
-|:----------------------:|:---------:|:-----------:|
-|       iconPadding      | dimension |      -      |
-|        iconSize        | dimension |      -      |
-|        leftIcon        |  integer  |      -      |
-|        leftText        |   string  |      -      |
-|        rightIcon       |  integer  |      -      |
-|        rightText       |   string  |      -      |
-|    selectedTextSize    | dimension |      -      |
-|        textSize        | dimension |      -      |
-|       switchColor      |   color   |      -      |
-|  sliderBackgroundColor |   color   |      -      |
-|        textColor       |   color   |      -      |
+|            Name           |    Type   | Description |
+|:-------------------------:|:---------:|:-----------:|
+|       ss_iconPadding      | dimension |      -      |
+|        ss_iconSize        | dimension |      -      |
+|        ss_leftIcon        |  integer  |      -      |
+|        ss_leftText        |   string  |      -      |
+|        ss_rightIcon       |  integer  |      -      |
+|        ss_rightText       |   string  |      -      |
+|    ss_selectedTextSize    | dimension |      -      |
+|        ss_textSize        | dimension |      -      |
+|       ss_switchColor      |   color   |      -      |
+|  ss_sliderBackgroundColor |   color   |      -      |
+|        ss_textColor       |   color   |      -      |
+|    ss_animationDuration   |  integer  |      -      |
 
 ## Status change notification
 StickySwitch.Direction has two value (LEFT, RIGHT)
@@ -94,6 +96,11 @@ stickySwitch.setOnSelectedChangeListener(new StickySwitch.OnSelectedChangeListen
 ### if you want switch button direction to left
 ```java
 stickySwitch.setDirection(StickySwitch.Direction.LEFT);
+```
+
+### if you want switch button direction to right without animation
+```java
+stickySwitch.setDirection(StickySwitch.Direction.RIGHT, false);
 ```
 
 ### Get current Direction
@@ -149,6 +156,13 @@ stickySwitch.setLeftIcon(drawable);
 stickySwitch.setSliderBackgroundColor(0xFF181821);
 stickySwitch.setSwitchColor(0xFF2371FA);
 stickySwitch.setTextColor(0xFFFFFFFF);
+```
+
+## Animation
+### custom duration
+```java
+// Animation duration to 1000ms (default duration is 600ms)
+stickySwitch.setAnimationDuration(1000);
 ```
 
 # Reference
