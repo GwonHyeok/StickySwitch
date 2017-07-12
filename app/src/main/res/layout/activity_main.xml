@@ -28,6 +28,7 @@
         app:ss_sliderBackgroundColor="@color/colorSliderBackground"
         app:ss_switchColor="@color/colorSwitchColor"
         app:ss_textColor="@color/colorTextColor"
-        app:ss_textSize="12sp" />
+        app:ss_textSize="12sp"
+        app:ss_animationType="line"/>
 
 </RelativeLayout>

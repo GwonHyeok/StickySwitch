@@ -53,6 +53,11 @@ class StickySwitch : View {
 
     private val TAG = "LIQUID_SWITCH"
 
+    enum class AnimationType {
+        LINE,
+        CURVED
+    }
+
     // left, right icon drawable
     var leftIcon: Drawable? = null
         set(drawable) {
@@ -194,6 +199,13 @@ class StickySwitch : View {
             invalidate()
         }
 
+    // type of transition animation between states
+    var animationType = AnimationType.LINE
+        set(value) {
+            field = value
+            invalidate()
+        }
+
     // listener
     var onSelectedChangeListener: OnSelectedChangeListener? = null
 
@@ -249,12 +261,15 @@ class StickySwitch : View {
         // animation duration
         animationDuration = typedArray.getInt(R.styleable.StickySwitch_ss_animationDuration, animationDuration.toInt()).toLong()
 
+        //animation type
+        animationType = AnimationType.values()[typedArray.getInt(R.styleable.StickySwitch_ss_animationType, AnimationType.LINE.ordinal)]
+
         typedArray.recycle()
     }
 
     //used to draw connection between two circle
     private val connectionPath = Path()
-    val xParam = 1/2f //Math.sin(Math.PI / 6).toFloat()
+    val xParam = 1 / 2f //Math.sin(Math.PI / 6).toFloat()
     val yParam = 0.86602540378f //Math.cos(Math.PI / 6).toFloat()
 
     /**
@@ -324,47 +339,57 @@ class StickySwitch : View {
         canvas?.drawCircle(ocX.toFloat(), ocY, evaluateBounceRate(ocRadius).toFloat(), switchBackgroundPaint)
         canvas?.drawCircle(ccX.toFloat(), ccY, evaluateBounceRate(ccRadius).toFloat(), switchBackgroundPaint)
 
-        // curved connection between two circles
-        if (animatePercent > 0 && animatePercent < 1) {
+        if (animationType == AnimationType.LINE) {
+            val rectT = circleRadius - circleRadius / 2
+            val rectB = circleRadius + circleRadius / 2
 
-            connectionPath.rewind()
+            canvas?.drawCircle(ccX.toFloat(), ccY, evaluateBounceRate(ccRadius).toFloat(), switchBackgroundPaint)
+            canvas?.drawRect(rectL.toFloat(), rectT, rectR.toFloat(), rectB, switchBackgroundPaint)
+        } else if (animationType == AnimationType.CURVED) {\
+            
+            // curved connection between two circles
+            if (animatePercent > 0 && animatePercent < 1) {
 
-            //puts points of rectangle on circle, on point  π/6 rad
-            val rectLCurve = rectL.toFloat() + ccRadius.toFloat() * xParam
-            val rectRCurve = rectR.toFloat() - ccRadius.toFloat() * xParam
+                connectionPath.rewind()
 
-            val rectTCurve = circleRadius - ccRadius.toFloat() * yParam
-            val rectBCurve = circleRadius + ccRadius.toFloat() * yParam
+                //puts points of rectangle on circle, on point  π/6 rad
+                val rectLCurve = rectL.toFloat() + ccRadius.toFloat() * xParam
+                val rectRCurve = rectR.toFloat() - ccRadius.toFloat() * xParam
 
-            //middle points through which goes cubic interpolation
-            val middlePointX = (rectRCurve + rectLCurve) / 2
-            val middlePointY = (rectTCurve + rectBCurve) / 2
+                val rectTCurve = circleRadius - ccRadius.toFloat() * yParam
+                val rectBCurve = circleRadius + ccRadius.toFloat() * yParam
 
-            // draws 'rectangle', but in the way that top line is concave, and bottom is convex
-            connectionPath.moveTo(rectLCurve, rectTCurve)
-            connectionPath.cubicTo(
-                    rectLCurve,
-                    rectTCurve,
-                    middlePointX,
-                    middlePointY,
-                    rectRCurve,
-                    rectTCurve
-            )
-            connectionPath.lineTo(
-                    rectRCurve,
-                    rectBCurve
-            )
-            connectionPath.cubicTo(
-                    rectRCurve,
-                    rectBCurve,
-                    middlePointX,
-                    middlePointY,
-                    rectLCurve,
-                    rectBCurve
-            )
-            connectionPath.close()
+                //middle points through which goes cubic interpolation
+                val middlePointX = (rectRCurve + rectLCurve) / 2
+                val middlePointY = (rectTCurve + rectBCurve) / 2
 
-            canvas?.drawPath(connectionPath, switchBackgroundPaint)
+                // draws 'rectangle', but in the way that top line is concave, and bottom is convex
+                connectionPath.moveTo(rectLCurve, rectTCurve)
+
+                connectionPath.cubicTo(
+                        rectLCurve,
+                        rectTCurve,
+                        middlePointX,
+                        middlePointY,
+                        rectRCurve,
+                        rectTCurve
+                )
+                connectionPath.lineTo(
+                        rectRCurve,
+                        rectBCurve
+                )
+                connectionPath.cubicTo(
+                        rectRCurve,
+                        rectBCurve,
+                        middlePointX,
+                        middlePointY,
+                        rectLCurve,
+                        rectBCurve
+                )
+                connectionPath.close()
+
+                canvas?.drawPath(connectionPath, switchBackgroundPaint)
+            }
         }
 
         canvas?.restore()
