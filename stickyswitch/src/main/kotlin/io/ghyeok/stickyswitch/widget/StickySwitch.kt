@@ -56,6 +56,7 @@ class StickySwitch : View {
     enum class AnimationType {
         LINE,
         CURVED
+    }
 
     enum class TextVisibility {
         VISIBLE,
