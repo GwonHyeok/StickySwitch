@@ -52,24 +52,26 @@ Add `StickySwitch` to your xml layout
         app:ss_sliderBackgroundColor="@color/colorSliderBackground"
         app:ss_switchColor="@color/colorSwitchColor"
         app:ss_textColor="@color/colorTextColor"
-        app:ss_textSize="12sp" />
+        app:ss_textSize="12sp" 
+        app:ss_animationType="line"/>
 ```
 
 ## Available attributes
-|            Name           |    Type   | Description |
-|:-------------------------:|:---------:|:-----------:|
-|       ss_iconPadding      | dimension |      -      |
-|        ss_iconSize        | dimension |      -      |
-|        ss_leftIcon        |  integer  |      -      |
-|        ss_leftText        |   string  |      -      |
-|        ss_rightIcon       |  integer  |      -      |
-|        ss_rightText       |   string  |      -      |
-|    ss_selectedTextSize    | dimension |      -      |
-|        ss_textSize        | dimension |      -      |
-|       ss_switchColor      |   color   |      -      |
-|  ss_sliderBackgroundColor |   color   |      -      |
-|        ss_textColor       |   color   |      -      |
-|    ss_animationDuration   |  integer  |      -      |
+|            Name           |    Type   |  Description  |
+|:-------------------------:|:---------:|:-------------:|
+|       ss_iconPadding      | dimension |       -       |
+|        ss_iconSize        | dimension |       -       |
+|        ss_leftIcon        |  integer  |       -       |
+|        ss_leftText        |   string  |       -       |
+|        ss_rightIcon       |  integer  |       -       |
+|        ss_rightText       |   string  |       -       |
+|    ss_selectedTextSize    | dimension |       -       |
+|        ss_textSize        | dimension |       -       |
+|       ss_switchColor      |   color   |       -       |
+|  ss_sliderBackgroundColor |   color   |       -       |
+|        ss_textColor       |   color   |       -       |
+|    ss_animationDuration   |  integer  |       -       |
+|    ss_animationType       |   enum    | line or curved|
 
 ## Status change notification
 StickySwitch.Direction has two value (LEFT, RIGHT)
@@ -163,6 +165,12 @@ stickySwitch.setTextColor(0xFFFFFFFF);
 ```java
 // Animation duration to 1000ms (default duration is 600ms)
 stickySwitch.setAnimationDuration(1000);
+```
+
+### set different animation type
+```java
+// Set animation type to curved (default is line)
+stickySwitch.setAnimationType(StickySwitch.AnimationType.CURVED);
 ```
 
 # Reference

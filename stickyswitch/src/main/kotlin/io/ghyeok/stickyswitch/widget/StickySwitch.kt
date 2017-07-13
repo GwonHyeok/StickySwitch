@@ -345,8 +345,8 @@ class StickySwitch : View {
 
             canvas?.drawCircle(ccX.toFloat(), ccY, evaluateBounceRate(ccRadius).toFloat(), switchBackgroundPaint)
             canvas?.drawRect(rectL.toFloat(), rectT, rectR.toFloat(), rectB, switchBackgroundPaint)
-        } else if (animationType == AnimationType.CURVED) {\
-            
+        } else if (animationType == AnimationType.CURVED) {
+
             // curved connection between two circles
             if (animatePercent > 0 && animatePercent < 1) {
 
