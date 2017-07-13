@@ -13,9 +13,15 @@
         <attr name="ss_sliderBackgroundColor" format="reference|color" />
         <attr name="ss_textColor" format="reference|color" />
         <attr name="ss_animationDuration" format="reference|integer" />
+
         <attr name="ss_animationType" format="enum">
             <enum name="line" value="0"/>
             <enum name="curved" value="1"/>
+        </attr>
+        <attr name="ss_textVisibility" format="enum">
+            <enum name="visible" value="0" />
+            <enum name="invisible" value="1" />
+            <enum name="gone" value="2" />
         </attr>
     </declare-styleable>
 </resources>

@@ -29,6 +29,7 @@
         app:ss_switchColor="@color/colorSwitchColor"
         app:ss_textColor="@color/colorTextColor"
         app:ss_textSize="12sp"
-        app:ss_animationType="line"/>
-
+        app:ss_animationType="line"
+        app:ss_textVisibility="visible" />
+  
 </RelativeLayout>

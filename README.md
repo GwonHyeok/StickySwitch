@@ -57,6 +57,7 @@ Add `StickySwitch` to your xml layout
 ```
 
 ## Available attributes
+
 |            Name           |    Type   |  Description  |
 |:-------------------------:|:---------:|:-------------:|
 |       ss_iconPadding      | dimension |       -       |
@@ -71,7 +72,9 @@ Add `StickySwitch` to your xml layout
 |  ss_sliderBackgroundColor |   color   |       -       |
 |        ss_textColor       |   color   |       -       |
 |    ss_animationDuration   |  integer  |       -       |
+|      ss_textVisibility    |    enum   |       -       |
 |    ss_animationType       |   enum    | line or curved|
+
 
 ## Status change notification
 StickySwitch.Direction has two value (LEFT, RIGHT)
@@ -132,11 +135,11 @@ stickySwitch.setRightText("Right");
 stickySwitch.setTypeFace(Typeface.DEFAULT_BOLD);
 ```
 
-### toggle text visibility
+### text visibility
 ```java
-stickySwitch.setShowText(true); // show text
-
-stickySwitch.setShowText(false); // hide text
+stickySwitch.setTextVisibility(StickySwitch.TextVisibility.VISIBLE); // Visible Text
+stickySwitch.setTextVisibility(StickySwitch.TextVisibility.INVISIBLE); // Invisible Text
+stickySwitch.setTextVisibility(StickySwitch.TextVisibility.GONE); // GONE Text
 ```
 
 ## Icon
