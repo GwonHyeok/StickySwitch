@@ -53,6 +53,12 @@ class StickySwitch : View {
 
     private val TAG = "LIQUID_SWITCH"
 
+    enum class TextVisibility {
+        VISIBLE,
+        INVISIBLE,
+        GONE
+    }
+
     // left, right icon drawable
     var leftIcon: Drawable? = null
         set(drawable) {
@@ -104,13 +110,6 @@ class StickySwitch : View {
             field = typeFace
             leftTextPaint.typeface = typeFace
             rightTextPaint.typeface = typeFace
-            invalidate()
-        }
-
-    // hide text options
-    var isShowText = true
-        set(showText) {
-            field = showText
             invalidate()
         }
 
@@ -201,6 +200,13 @@ class StickySwitch : View {
     var animatorSet: AnimatorSet? = null
     var animationDuration: Long = 600
 
+    // state of text visibility
+    var textVisibility = TextVisibility.VISIBLE
+        set(value) {
+            field = value
+            invalidate()
+        }
+
     constructor(context: Context) : this(context, null)
 
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
@@ -248,6 +254,9 @@ class StickySwitch : View {
 
         // animation duration
         animationDuration = typedArray.getInt(R.styleable.StickySwitch_ss_animationDuration, animationDuration.toInt()).toLong()
+
+        // text visibility
+        textVisibility = TextVisibility.values()[typedArray.getInt(R.styleable.StickySwitch_ss_textVisibility, TextVisibility.VISIBLE.ordinal)]
 
         typedArray.recycle()
     }
@@ -365,7 +374,7 @@ class StickySwitch : View {
         rightTextPaint.textSize = rightTextSize
 
         // draw text when isShowText is true
-        if (isShowText) {
+        if (textVisibility == TextVisibility.VISIBLE) {
             // measure text size
             measureText()
 
@@ -408,13 +417,14 @@ class StickySwitch : View {
 
         val diameter = (iconPadding + iconSize / 2) * 2
         val textWidth = leftTextRect.width() + rightTextRect.width()
+        val measuredTextHeight = if (textVisibility == TextVisibility.GONE) 0 else selectedTextSize * 2
 
         val heightMode = MeasureSpec.getMode(heightMeasureSpec)
         var heightSize = 0
 
         when (heightMode) {
             MeasureSpec.UNSPECIFIED -> heightSize = heightMeasureSpec
-            MeasureSpec.AT_MOST -> heightSize = diameter + (selectedTextSize * 2)
+            MeasureSpec.AT_MOST -> heightSize = diameter + measuredTextHeight
             MeasureSpec.EXACTLY -> heightSize = MeasureSpec.getSize(heightMeasureSpec)
         }
 
