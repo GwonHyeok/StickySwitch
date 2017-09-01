@@ -33,7 +33,7 @@ import android.graphics.drawable.Drawable
 import android.os.Build
 import android.support.annotation.ColorInt
 import android.support.annotation.DrawableRes
-import android.support.v4.content.ContextCompat
+import android.support.v7.content.res.AppCompatResources
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -70,7 +70,7 @@ class StickySwitch : View {
             field = drawable
             invalidate()
         }
-    private var rightIcon: Drawable? = null
+    var rightIcon: Drawable? = null
         set(drawable) {
             field = drawable
             invalidate()
@@ -405,29 +405,20 @@ class StickySwitch : View {
         canvas?.restore()
 
         // draw left icon
-        if (leftIcon != null) {
+        leftIcon?.run {
             canvas?.save()
-            leftIcon?.bounds?.set(iconMarginLeft,
-                    iconMarginTop,
-                    iconMarginLeft + iconWidth,
-                    iconMarginTop + iconHeight
-            )
-            leftIcon?.alpha = if (isSwitchOn) 153 else 255
-            leftIcon?.draw(canvas)
+            setBounds(iconMarginLeft, iconMarginTop, iconMarginLeft + iconWidth, iconMarginTop + iconHeight)
+            alpha = if (isSwitchOn) 153 else 255
+            draw(canvas)
             canvas?.restore()
         }
 
         // draw right icon
-        if (rightIcon != null) {
+        rightIcon?.run {
             canvas?.save()
-            rightIcon?.bounds?.set(
-                    measuredWidth - iconWidth - iconMarginRight,
-                    iconMarginTop,
-                    measuredWidth - iconMarginRight,
-                    iconMarginTop + iconHeight
-            )
-            rightIcon?.alpha = if (!isSwitchOn) 153 else 255
-            rightIcon?.draw(canvas)
+            setBounds(measuredWidth - iconWidth - iconMarginRight, iconMarginTop, measuredWidth - iconMarginRight, iconMarginTop + iconHeight)
+            alpha = if (!isSwitchOn) 153 else 255
+            draw(canvas)
             canvas?.restore()
         }
 
@@ -560,7 +551,7 @@ class StickySwitch : View {
         this.rightIcon = this.getDrawable(resourceId)
     }
 
-    private fun getDrawable(@DrawableRes resourceId: Int) = ContextCompat.getDrawable(context, resourceId)
+    private fun getDrawable(@DrawableRes resourceId: Int) = AppCompatResources.getDrawable(context, resourceId)
 
     private fun notifySelectedChange() {
         onSelectedChangeListener?.onSelectedChange(if (isSwitchOn) Direction.RIGHT else Direction.LEFT, getText())
