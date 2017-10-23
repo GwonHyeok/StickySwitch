@@ -51,7 +51,8 @@ import io.ghyeok.stickyswitch.R
  */
 class StickySwitch : View {
 
-    private val TAG = "LIQUID_SWITCH"
+    @Suppress("unused", "PrivatePropertyName")
+    private val TAG = "StickySwitch"
 
     enum class AnimationType {
         LINE,
@@ -460,9 +461,7 @@ class StickySwitch : View {
         }
     }
 
-    private fun evaluateBounceRate(value: Double): Double {
-        return value * animateBounceRate
-    }
+    private fun evaluateBounceRate(value: Double): Double = value * animateBounceRate
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         isSwitchOn = isSwitchOn.not()
@@ -473,7 +472,6 @@ class StickySwitch : View {
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-
         // measure text size
         measureText()
 
@@ -502,16 +500,11 @@ class StickySwitch : View {
         setMeasuredDimension(widthSize, heightSize)
     }
 
-    override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
-        super.onLayout(changed, left, top, right, bottom)
-    }
-
     @JvmOverloads
-    fun setDirection(direction: Direction, isAnimate: Boolean = true) {
-        var newSwitchState = isSwitchOn
-        when (direction) {
-            Direction.LEFT -> newSwitchState = false
-            Direction.RIGHT -> newSwitchState = true
+    fun setDirection(direction: Direction, isAnimate: Boolean = true, shouldTriggerSelected: Boolean = true) {
+        val newSwitchState = when (direction) {
+            Direction.LEFT -> false
+            Direction.RIGHT -> true
         }
 
         if (newSwitchState != isSwitchOn) {
@@ -523,23 +516,21 @@ class StickySwitch : View {
 
             // when isAnimate is false not showing liquid animation
             if (isAnimate) animateCheckState(isSwitchOn) else changeCheckState(isSwitchOn)
-            notifySelectedChange()
+            if (shouldTriggerSelected) {
+                notifySelectedChange()
+            }
         }
     }
 
-    fun getDirection(): Direction {
-        when (isSwitchOn) {
-            true -> return Direction.RIGHT
-            false -> return Direction.LEFT
-        }
+    fun getDirection(): Direction = when (isSwitchOn) {
+        true -> Direction.RIGHT
+        false -> Direction.LEFT
     }
 
     @JvmOverloads
-    fun getText(direction: Direction = getDirection()): String {
-        when (direction) {
-            Direction.LEFT -> return leftText
-            Direction.RIGHT -> return rightText
-        }
+    fun getText(direction: Direction = getDirection()): String = when (direction) {
+        Direction.LEFT -> leftText
+        Direction.RIGHT -> rightText
     }
 
     fun setLeftIcon(@DrawableRes resourceId: Int) {
@@ -578,7 +569,6 @@ class StickySwitch : View {
     }
 
     private fun changeCheckState(newCheckedState: Boolean) {
-
         // Change TextAlpha Without Animation
         leftTextAlpha = if (newCheckedState) textAlphaMin else textAlphaMax
         rightTextAlpha = if (newCheckedState) textAlphaMax else textAlphaMin
