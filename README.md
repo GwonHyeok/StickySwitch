@@ -29,7 +29,7 @@ allprojects {
 Add the dependency
 ```Groovy
 dependencies {
-    compile 'com.github.GwonHyeok:StickySwitch:0.0.13'
+    compile 'com.github.GwonHyeok:StickySwitch:0.0.14'
 }
 ```
 
@@ -98,6 +98,11 @@ stickySwitch.setOnSelectedChangeListener(new StickySwitch.OnSelectedChangeListen
 ```
 
 ## Direction
+### Methods
+```kotlin
+fun setDirection(direction: Direction, isAnimate: Boolean = true, shouldTriggerSelected: Boolean = true)
+```
+
 ### if you want switch button direction to left
 ```java
 stickySwitch.setDirection(StickySwitch.Direction.LEFT);
@@ -106,6 +111,11 @@ stickySwitch.setDirection(StickySwitch.Direction.LEFT);
 ### if you want switch button direction to right without animation
 ```java
 stickySwitch.setDirection(StickySwitch.Direction.RIGHT, false);
+```
+
+### if you want switch button direction to right with animation and prevent call selectedChangeListener
+```java
+stickySwitch.setDirection(StickySwitch.Direction.RIGHT, false, false);
 ```
 
 ### Get current Direction
