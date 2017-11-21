@@ -464,6 +464,8 @@ class StickySwitch : View {
     private fun evaluateBounceRate(value: Double): Double = value * animateBounceRate
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
+        if (isEnabled.not() || isClickable.not()) return false
+
         isSwitchOn = isSwitchOn.not()
         animateCheckState(isSwitchOn)
         notifySelectedChange()
