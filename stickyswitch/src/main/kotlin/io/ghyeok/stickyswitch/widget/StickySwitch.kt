@@ -36,6 +36,7 @@ import android.support.annotation.DrawableRes
 import android.support.v7.content.res.AppCompatResources
 import android.util.AttributeSet
 import android.view.MotionEvent
+import android.view.MotionEvent.ACTION_UP
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.AccelerateInterpolator
@@ -233,6 +234,10 @@ class StickySwitch : View {
         init(attrs, defStyleAttr, defStyleRes)
     }
 
+    init {
+        isClickable = true
+    }
+
     private fun init(attrs: AttributeSet?, defStyleAttr: Int = 0, defStyleRes: Int = 0) {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.StickySwitch, defStyleAttr, defStyleRes)
 
@@ -267,7 +272,6 @@ class StickySwitch : View {
 
         // animation duration
         animationDuration = typedArray.getInt(R.styleable.StickySwitch_ss_animationDuration, animationDuration.toInt()).toLong()
-
 
         //animation type
         animationType = AnimationType.values()[typedArray.getInt(R.styleable.StickySwitch_ss_animationType, AnimationType.LINE.ordinal)]
@@ -466,9 +470,13 @@ class StickySwitch : View {
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         if (isEnabled.not() || isClickable.not()) return false
 
-        isSwitchOn = isSwitchOn.not()
-        animateCheckState(isSwitchOn)
-        notifySelectedChange()
+        when (event?.action) {
+            ACTION_UP -> {
+                isSwitchOn = isSwitchOn.not()
+                animateCheckState(isSwitchOn)
+                notifySelectedChange()
+            }
+        }
 
         return super.onTouchEvent(event)
     }
