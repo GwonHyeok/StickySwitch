@@ -79,9 +79,17 @@ class StickySwitch : View {
         }
 
     // icon variables
-    private var iconSize = 100
-    private var iconPadding = 70
-
+    var iconSize = 100
+        set(value) {
+            field = value
+            invalidate()
+        }
+    var iconPadding = 70
+        set(value) {
+            field = value
+            invalidate()
+        }
+    
     // text variables
     var leftText = ""
         set(value) {
