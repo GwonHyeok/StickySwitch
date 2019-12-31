@@ -29,7 +29,7 @@ allprojects {
 Add the dependency
 ```Groovy
 dependencies {
-    implementation 'com.github.GwonHyeok:StickySwitch:0.0.15'
+    implementation 'com.github.GwonHyeok:StickySwitch:0.0.16'
 }
 ```
 
