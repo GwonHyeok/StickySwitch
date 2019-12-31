@@ -31,9 +31,6 @@ import android.content.Context
 import android.graphics.*
 import android.graphics.drawable.Drawable
 import android.os.Build
-import android.support.annotation.ColorInt
-import android.support.annotation.DrawableRes
-import android.support.v7.content.res.AppCompatResources
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.MotionEvent.ACTION_UP
@@ -41,6 +38,9 @@ import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
+import androidx.annotation.ColorInt
+import androidx.annotation.DrawableRes
+import androidx.appcompat.content.res.AppCompatResources
 import io.ghyeok.stickyswitch.R
 
 /**
@@ -238,6 +238,10 @@ class StickySwitch : View {
         isClickable = true
     }
 
+    fun setA(onSelectedChangeListener: OnSelectedChangeListener) {
+        this.onSelectedChangeListener = onSelectedChangeListener
+    }
+
     private fun init(attrs: AttributeSet?, defStyleAttr: Int = 0, defStyleRes: Int = 0) {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.StickySwitch, defStyleAttr, defStyleRes)
 
@@ -411,20 +415,24 @@ class StickySwitch : View {
 
         // draw left icon
         leftIcon?.run {
-            canvas?.save()
-            setBounds(iconMarginLeft, iconMarginTop, iconMarginLeft + iconWidth, iconMarginTop + iconHeight)
-            alpha = if (isSwitchOn) 153 else 255
-            draw(canvas)
-            canvas?.restore()
+            canvas?.let {
+                it.save()
+                setBounds(iconMarginLeft, iconMarginTop, iconMarginLeft + iconWidth, iconMarginTop + iconHeight)
+                alpha = if (isSwitchOn) 153 else 255
+                draw(it)
+                it.restore()
+            }
         }
 
         // draw right icon
         rightIcon?.run {
-            canvas?.save()
-            setBounds(measuredWidth - iconWidth - iconMarginRight, iconMarginTop, measuredWidth - iconMarginRight, iconMarginTop + iconHeight)
-            alpha = if (!isSwitchOn) 153 else 255
-            draw(canvas)
-            canvas?.restore()
+            canvas?.let {
+                it.save()
+                setBounds(measuredWidth - iconWidth - iconMarginRight, iconMarginTop, measuredWidth - iconMarginRight, iconMarginTop + iconHeight)
+                alpha = if (!isSwitchOn) 153 else 255
+                draw(it)
+                it.restore()
+            }
         }
 
         // bottom space
